@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>منصة محمد التعليمية</title>
+    <style>
+        /* التنسيق الأساسي */
+        body { 
+            background-color: #000; 
+            color: #00ff41; 
+            margin: 0; 
+            font-family: sans-serif; 
+        }
+
+        /* خلفية الـ Matrix */
+        #matrix {
+            position: fixed;
+            top: 0; left: 0;
+            z-index: -1;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* تصميم الكارت - تأكد من الشفافية */
+        .card {
+            background: rgba(20, 20, 20, 0.9);
+            border: 2px solid #00ff41;
+            border-radius: 15px;
+            margin: 15px;
+            width: 300px;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        /* الصور ملونة وطبيعية */
+        .card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            display: block; /* يمنع أي فراغات تحت الصورة */
+        }
+
+        .card-content { padding: 15px; }
+
+        .btn {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 20px;
+            border: 1px solid #00ff41;
+            color: #00ff41;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .btn:hover { background: #00ff41; color: #000; }
+    </style>
+</head>
+<body>
+
+<canvas id="matrix"></canvas>
+
+<h1 style="text-align: center; padding: 20px;">[ نظام الدروس المبرمجة ]</h1>
+
+<div class="container">
+    {% for course in courses %}
+    <div class="card">
+        {% if course.image %}
+            <img src="{{ course.image.url }}" alt="صورة الدرس">
+        {% endif %}
+        <div class="card-content">
+            <h3>{{ course.title }}</h3>
+            <a href="{% url 'video_detail' course.id %}" class="btn">الدخول إلى النظام ></a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<script>
+    const canvas = document.getElementById('matrix');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const nums = "01";
+    const fontSize = 16;
+    const columns = canvas.width / fontSize;
+    const drops = Array(Math.floor(columns)).fill(1);
+
+    function draw() {
+        ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "#00ff41";
+        ctx.font = fontSize + "px monospace";
+        for (let i = 0; i < drops.length; i++) {
+            const text = nums.charAt(Math.floor(Math.random() * nums.length));
+            ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+            if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+            drops[i]++;
+        }
+    }
+    setInterval(draw, 33);
+</script>
+
+</body>
+</html>
