@@ -3,110 +3,191 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>أكاديمية محمد للبرمجة المتقدمة</title>
+    <title>أكاديمية محمد للبرمجة المتقدمة | لوحة التحكم</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        /* إعدادات الخلفية العامة كما في صورة السيرفرات */
-        body {
-            background: black url('https://raw.githubusercontent.com/mohkori50-droid/-/main/image_1cc88b.jpg') no-repeat center center fixed;
+        /* إعدادات الجسم الرئيسية لضمان خلفية السيرفرات الحرفية */
+        body, html {
+            height: 100%;
+            margin: 0;
+            background: #000 url('https://raw.githubusercontent.com/mohkori50-droid/-/main/image_1cc88b.jpg') no-repeat center center fixed;
             background-size: cover;
             color: #00f2ff;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Courier New', Courier, monospace; /* طابع برمجي */
             overflow-x: hidden;
         }
 
-        /* الطبقة الشفافة التي تظهر في صورتك */
-        .glass-container {
-            background: rgba(0, 10, 10, 0.85);
-            border: 2px solid #00f2ff;
-            box-shadow: 0 0 20px #00f2ff, inset 0 0 10px #00f2ff;
+        /* طبقة تعتيم لزيادة تباين النيون */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.75);
+            z-index: 0;
+        }
+
+        .content-wrapper {
+            position: relative;
+            z-index: 1;
+            padding-top: 50px;
+        }
+
+        /* الحاوية العلوية الكبيرة (Neon Box) */
+        .neon-box-primary {
+            background: rgba(0, 5, 5, 0.9);
+            border: 3px solid #00f2ff;
             border-radius: 20px;
-            padding: 40px;
-            margin-top: 40px;
+            padding: 50px 20px;
+            box-shadow: 0 0 25px #00f2ff, inset 0 0 20px #00f2ff;
+            margin-bottom: 60px;
             text-align: center;
         }
 
         .neon-title {
-            text-shadow: 0 0 10px #00f2ff, 0 0 20px #00f2ff;
-            font-weight: bold;
-            margin-bottom: 20px;
+            font-size: 3.5rem;
+            font-weight: 900;
+            text-shadow: 0 0 10px #00f2ff, 0 0 20px #00f2ff, 0 0 40px #00f2ff;
+            margin-bottom: 15px;
         }
 
-        /* تنسيق بطاقات الكورسات (المربعات المضيئة) */
+        .sub-text {
+            color: #00d2ff;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            margin-bottom: 30px;
+        }
+
+        /* كروت الكورسات النيونية الحرفية */
         .cyber-card {
-            background: rgba(0, 0, 0, 0.9);
-            border: 1.5px solid #00f2ff;
-            border-radius: 10px;
-            padding: 25px;
-            margin-bottom: 20px;
-            transition: 0.3s;
-            box-shadow: 0 0 5px #00f2ff;
+            background: rgba(0, 0, 0, 0.95);
+            border: 2px solid #00f2ff;
+            border-radius: 15px;
+            padding: 30px;
+            height: 100%;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 0 15px rgba(0, 242, 255, 0.2);
+            position: relative;
         }
 
         .cyber-card:hover {
-            box-shadow: 0 0 25px #00f2ff;
-            transform: translateY(-5px);
+            transform: scale(1.05);
+            box-shadow: 0 0 35px #00f2ff;
+            background: rgba(0, 15, 15, 1);
         }
 
-        /* تنسيق الأزرار كما في image_1cd04b.png */
-        .btn-neon {
+        .card-header-cyan {
+            background: #007bff;
+            color: white;
+            padding: 5px 15px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 20px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .status-info {
+            font-size: 0.9rem;
+            color: #fff;
+            margin-bottom: 15px;
+            border-bottom: 1px solid rgba(0, 242, 255, 0.3);
+            padding-bottom: 10px;
+        }
+
+        /* أزرار النيون الحرفية كما في الصورة */
+        .btn-neon-action {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
             background: transparent;
             color: #00f2ff;
-            border: 1px solid #00f2ff;
-            padding: 8px 25px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px #00f2ff;
+            border: 2px solid #00f2ff;
+            border-radius: 8px;
             text-decoration: none;
-            display: inline-block;
-            width: 100%;
+            font-weight: bold;
+            text-align: center;
+            box-shadow: 0 0 10px #00f2ff;
+            transition: 0.3s;
         }
 
-        .btn-neon:hover {
+        .btn-neon-action:hover {
             background: #00f2ff;
-            color: black;
-            box-shadow: 0 0 20px #00f2ff;
+            color: #000;
+            box-shadow: 0 0 25px #00f2ff;
         }
 
-        .status-text {
-            font-size: 0.8rem;
-            color: #ffffff;
-            opacity: 0.8;
+        /* تأثير مصفوفة الأرقام الخلفي */
+        .matrix-numbers {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            color: rgba(0, 255, 255, 0.05);
+            font-size: 10px;
+            white-space: nowrap;
+            z-index: 0;
+        }
+
+        .shield-icon {
+            filter: drop-shadow(0 0 10px #00f2ff);
+            margin-bottom: 10px;
         }
     </style>
 </head>
 <body>
 
-<div class="container mb-5">
-    <div class="glass-container">
-        <h1 class="neon-title display-4">🛡️ أكاديمية محمد للبرمجة المتقدمة</h1>
-        <p class="lead">نحن نكسر الحواجز الرقمية لنبني مستقبلاً أفضل</p>
-        <div class="mt-4">
-            <span class="status-text">دخول لوحة التحكم ... جاري الاتصال</span>
+    <div class="overlay"></div>
+    <div class="matrix-numbers">010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101</div>
+
+    <div class="content-wrapper">
+        <div class="container">
+            
+            <div class="neon-box-primary">
+                <div class="shield-icon">
+                   <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#00f2ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                </div>
+                <h1 class="neon-title">أكاديمية محمد للبرمجة المتقدمة</h1>
+                <p class="sub-text">نحن نكسر الحواجز الرقمية لنبني مستقبلاً أفضل</p>
+                <div class="status-text text-light opacity-50">دخول لوحة التحكم ... جاري الاتصال بالنظام</div>
+            </div>
+
+            <div class="row g-4">
+                
+                <div class="col-md-6">
+                    <div class="cyber-card">
+                        <div class="card-header-cyan">Security 01</div>
+                        <div class="text-center">
+                            <p class="status-info text-info">جاري التحميل...</p>
+                            <p class="mb-4">أساسيات حماية المواقع من هجمات الاختراق السيبرانية المتقدمة.</p>
+                            <a href="#" class="btn-neon-action">قريباً</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="cyber-card">
+                        <h2 class="neon-text text-center mb-3">Project: Django</h2>
+                        <div class="status-info text-center">
+                            <span class="text-light">الحالة: متصل</span> | 
+                            <span class="text-success">التشفير: نشط</span>
+                        </div>
+                        <div class="text-center">
+                            <p class="mb-4">بناء الأنظمة الخلفية المتقدمة وإدارة قواعد البيانات السحابية العملاقة.</p>
+                            <a href="#" class="btn-neon-action">تحميل البيانات</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <footer class="text-center mt-5 pb-5">
+                <p class="text-info opacity-50 small">نظام التشغيل: أكتيف | 2026 © جميع الحقوق محفوظة لمحمد</p>
+            </footer>
+
         </div>
     </div>
-
-    <div class="row mt-5">
-        
-        <div class="col-md-6 mb-4">
-            <div class="cyber-card h-100 text-end">
-                <h3 class="neon-title text-center">Project: Django</h3>
-                <p class="status-text text-center">الحالة: متصل | التشفير: نشط</p>
-                <p class="text-center">بناء الأنظمة الخلفية وإدارة قواعد البيانات السحابية.</p>
-                <a href="#" class="btn-neon text-center">تحميل البيانات</a>
-            </div>
-        </div>
-
-        <div class="col-md-6 mb-4">
-            <div class="cyber-card h-100 text-end">
-                <div class="bg-primary text-white text-center mb-3 py-1">Security 01</div>
-                <p class="status-text text-center">جاري التحميل...</p>
-                <p class="text-center">أساسيات حماية المواقع من هجمات الاختراق.</p>
-                <a href="#" class="btn-neon text-center">قريباً</a>
-            </div>
-        </div>
-
-    </div>
-</div>
 
 </body>
 </html>
