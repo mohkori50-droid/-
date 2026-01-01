@@ -1,20 +1,9 @@
 from django.contrib import admin
-from django.urls import path, include
-from django.conf import settings
-from django.conf.urls.static import static
+from django.urls import path
+from . import views  # استيراد الـ views مباشرة لأنها في نفس المجلد
 
 urlpatterns = [
-    # 1. مسار لوحة الإدارة
     path('admin/', admin.site.urls),
-    
-    # 2. مسار نظام الحسابات الجاهز
-    path('accounts/', include('django.contrib.auth.urls')), 
-    
-    # 3. المسار الرئيسي للتطبيق
-    path('', include('courses_mohamed.urls')), 
+    path('', views.course_list, name='course_list'),  # تأكد من اسم الدالة في views.py
+    path('course/<int:pk>/', views.video_detail, name='video_detail'),
 ]
-
-# 4. الربط الحيوي لملفات الميديا والصور (مهم جداً لعمل الفيديوهات)
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
