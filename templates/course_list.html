@@ -12,7 +12,6 @@
         }
 
         body {
-            /* دمج صورة السيرفرات كخلفية حقيقية */
             background: #000 url('https://raw.githubusercontent.com/mohkori50-droid/-/main/image_1cc88b.jpg') no-repeat center center fixed;
             background-size: cover;
             color: white;
@@ -32,7 +31,6 @@
             perspective: 1200px;
         }
 
-        /* الهيدر المضيء من صورتك الأخيرة */
         .header-panel {
             background: var(--glass);
             border: 2px solid var(--neon);
@@ -51,7 +49,6 @@
             font-size: clamp(2rem, 5vw, 3.5rem);
         }
 
-        /* تنسيق كروت الدروس الديناميكية */
         .cyber-card {
             background: rgba(0, 0, 0, 0.9);
             border: 1px solid var(--neon);
@@ -69,7 +66,7 @@
         }
 
         .card-header-cyan {
-            background: #007bff; /* اللون الأزرق من صورتك */
+            background: #007bff;
             color: white;
             padding: 10px;
             font-weight: bold;
@@ -105,7 +102,7 @@
     <div class="header-panel">
         <h1 class="neon-title">أكاديمية محمد للبرمجة المتقدمة</h1>
         <p class="fs-4">نحن نكسر الحواجز الرقمية لنبني مستقبلاً أفضل</p>
-        <div class="mt-2 small opacity-50">دخول لوحة التحكم ... جاري استدعاء البيانات من السيرفر</div>
+        <div class="mt-2 small opacity-50">دخول لوحة التحكم ... جاري الاتصال</div>
     </div>
 
     <div class="row g-4 justify-content-center">
@@ -116,13 +113,13 @@
                 <div class="p-4 text-center">
                     <p class="small text-info">الحالة: متصل | التشفير: نشط</p>
                     <p class="text-light opacity-75">{{ course.description|truncatechars:100 }}</p>
-                    <a href="{% url 'course_detail' course.id %}" class="btn-action">فتح البيانات</a>
+                    <a href="#" class="btn-action">فتح البيانات</a>
                 </div>
             </div>
         </div>
         {% empty %}
         <div class="text-center mt-5">
-            <h3 class="text-warning" style="text-shadow: 0 0 10px orange;">خطأ: لم يتم العثور على دروس في قاعدة البيانات.</h3>
+            <h3 class="text-warning" style="text-shadow: 0 0 10px orange;">خطأ: لم يتم العثور على دروس.</h3>
             <p>يرجى إضافة دروس من لوحة تحكم Django Admin.</p>
         </div>
         {% endfor %}
