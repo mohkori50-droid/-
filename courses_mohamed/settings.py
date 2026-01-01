@@ -48,4 +48,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 PORT = os.environ.get('PORT', '10000')
 
 # أضف هذا السطر في نهاية الملف لربط المنفذ بـ Django
-# WSGI_APPLICATION = 'courses_mohamed.wsgi.application'
+WSGI_APPLICATION = 'courses_mohamed.wsgi.application'
