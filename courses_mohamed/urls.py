@@ -1,11 +1,10 @@
-from django.contrib import admin
 from django.urls import path
-from . import views
-from django.conf import settings
-from django.conf.urls.static import static
+from . import views  # استيراد ملف views.py الخاص بك
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    # الرابط الأساسي الذي تظهر فيه الكروت النيون
     path('', views.course_list, name='course_list'),
-    path('course/<int:course_id>/', views.video_detail, name='video_detail'),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+    # الرابط الجديد الذي سيفعل زر "فتح البيانات" لكل درس
+    path('course/<int:pk>/', views.course_detail, name='course_detail'),
+]
