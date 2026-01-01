@@ -6,7 +6,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # 2. إعدادات الأمان واللغة
 SECRET_KEY = 'django-insecure-your-secret-key-here'
-DEBUG = True 
+DEBUG = False
 ALLOWED_HOSTS = ['*']
 
 LANGUAGE_CODE = 'ar' 
