@@ -1,5 +1,11 @@
-from django.apps import AppConfig
-
-class CoursesMohamedConfig(AppConfig):
-    default_auto_field = 'django.db.models.BigAutoField'
-    name = 'courses_mohamed'
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    # أضف السطرين القادمين هنا بالضبط
+    'courses_mohamed', 
+    'whitenoise.runserver_nostatic', 
+]
