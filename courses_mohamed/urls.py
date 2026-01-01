@@ -1,10 +1,9 @@
-from django.urls import path
-from . import views
+from django.contrib import admin
+from django.urls import path, include
 
 urlpatterns = [
-    path('', views.course_list, name='course_list'),
-    
-    # تأكد أن الاسم هنا هو 'course_detail' ليتوافق مع زر الـ HTML
-    # وتأكد أنه يستدعي دالة 'video_detail' الموجودة في الـ views
-    path('course/<int:course_id>/', views.video_detail, name='course_detail'),
+    path('admin/', admin.site.urls),
+    # هذا السطر هو الذي سيحل مشكلة 'login' فوراً
+    path('accounts/', include('django.contrib.auth.urls')), 
+    path('', include('courses.urls')), # تأكد من اسم تطبيقك هنا
 ]
