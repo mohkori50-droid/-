@@ -19,7 +19,6 @@
             overflow-x: hidden;
         }
 
-        /* تأثير Matrix الخلفية */
         #matrix-canvas {
             position: fixed;
             top: 0;
@@ -37,7 +36,6 @@
             z-index: -1;
         }
 
-        /* الشريط العلوي الاحترافي */
         .navbar {
             background: rgba(0, 0, 0, 0.8) !important;
             border-bottom: 1px solid var(--neon);
@@ -115,36 +113,15 @@
             color: black;
             box-shadow: 0 0 25px var(--neon);
         }
-
-        /* تحسين شكل المدخلات في أسفل الصفحة */
-        .ask-input {
-            background: rgba(0, 20, 30, 0.7);
-            border: 1px solid var(--neon);
-            color: white;
-            border-radius: 10px;
-        }
-        
-        .ask-input:focus {
-            background: rgba(0, 30, 40, 0.9);
-            border-color: var(--neon);
-            box-shadow: 0 0 15px var(--neon);
-            color: white;
-        }
     </style>
 </head>
 <body>
 
 <nav class="navbar navbar-expand-lg">
     <div class="container-fluid">
-        <a class="navbar-brand text-info fw-bold" href="#" style="letter-spacing: 2px;">CORE-SYSTEM</a>
+        <a class="navbar-brand text-info fw-bold" href="/" style="letter-spacing: 2px;">CORE-SYSTEM</a>
         <div class="ms-auto d-flex align-items-center">
-            {% if user.is_authenticated %}
-                <span class="text-white me-3 small opacity-75">المستخدم: {{ user.username }}</span>
-                <a href="{% url 'logout' %}" class="btn btn-outline-danger btn-sm">Logout</a>
-            {% else %}
-                <a href="{% url 'login' %}" class="nav-link text-info me-3 fw-bold small">LOGIN</a>
-                <a href="/register" class="btn btn-outline-info btn-sm fw-bold">SIGN IN</a>
-            {% endif %}
+             <a href="/admin/" class="btn btn-outline-info btn-sm fw-bold">لوحة التحكم</a>
         </div>
     </div>
 </nav>
@@ -166,67 +143,18 @@
                 <div class="p-4 text-center">
                     <p class="small text-info mb-2">STATUS: ACTIVE | ENCRYPTION: ON</p>
                     <p class="text-light opacity-75 small" style="height: 50px; overflow: hidden;">{{ course.description|truncatechars:80 }}</p>
-                    <a href="{% url 'course_detail' course.id %}" class="btn-action">فتح البيانات</a>
+                    
+                    <a href="{% url 'video_detail' course.id %}" class="btn-action">فتح البيانات</a>
                 </div>
             </div>
         </div>
         {% empty %}
         <div class="text-center mt-5">
-            <h3 class="text-warning">خطأ: لا توجد بيانات دروس متاحة حالياً.</h3>
+            <h3 class="text-warning">لا توجد بيانات متاحة حالياً. أضف دورة من لوحة التحكم.</h3>
         </div>
         {% endfor %}
-    </div>
-
-    <div class="header-panel mt-5" style="border-style: dashed; border-width: 1px; padding: 30px;">
-        <h3 class="text-info mb-4" style="text-shadow: 0 0 10px var(--neon); font-size: 1.4rem;">اسأل المطورين [Support Node]</h3>
-        <form action="#" method="POST">
-            {% csrf_token %}
-            <textarea class="form-control ask-input mb-3" rows="3" placeholder="أدخل استفسارك التقني هنا..."></textarea>
-            <button class="btn-action" style="width: 180px; margin: 0 auto;">إرسال الطلب</button>
-        </form>
     </div>
 </div>
 
 <script>
-    const canvas = document.getElementById('matrix-canvas');
-    const ctx = canvas.getContext('2d');
-
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    const characters = "01";
-    const fontSize = 16;
-    const columns = canvas.width / fontSize;
-    const drops = [];
-
-    for (let i = 0; i < columns; i++) {
-        drops[i] = 1;
-    }
-
-    function draw() {
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = '#00f2ff'; 
-        ctx.font = fontSize + 'px monospace';
-
-        for (let i = 0; i < drops.length; i++) {
-            const text = characters.charAt(Math.floor(Math.random() * characters.length));
-            ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
-            if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-                drops[i] = 0;
-            }
-            drops[i]++;
-        }
-    }
-
-    window.addEventListener('resize', () => {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-    });
-
-    setInterval(draw, 35);
-</script>
-
-</body>
-</html>
+    const canvas = document.

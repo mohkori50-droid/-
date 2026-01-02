@@ -1,19 +1,25 @@
-<div class="video-container" style="text-align: center; margin: 20px 0;">
+<div class="video-container" style="text-align: center; margin: 40px 0; perspective: 1000px;">
     {% if course.lessons.all %}
-        <iframe 
-            width="800" 
-            height="450" 
-            src="{{ course.lessons.first.video_url }}" 
-            title="YouTube video player" 
-            frameborder="0" 
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-            referrerpolicy="strict-origin-when-cross-origin" 
-            allowfullscreen 
-            style="border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
-        </iframe>
+        <div style="display: inline-block; border: 2px solid var(--neon); border-radius: 15px; overflow: hidden; box-shadow: 0 0 20px rgba(0, 242, 255, 0.3);">
+            <iframe 
+                width="800" 
+                height="450" 
+                src="{{ course.lessons.first.video_url }}" 
+                title="YouTube video player" 
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                referrerpolicy="strict-origin-when-cross-origin" 
+                allowfullscreen 
+                style="max-width: 100%; display: block;">
+            </iframe>
+        </div>
+        <h4 class="text-info mt-3">عرض الآن: {{ course.lessons.first.title }}</h4>
     {% else %}
-        <div style="padding: 50px; background: #eee; border-radius: 10px;">
-            <h3>لا توجد دروس مضافة لهذا الكورس بعد.</h3>
+        <div style="padding: 50px; background: rgba(255, 255, 255, 0.05); border: 1px dashed var(--neon); border-radius: 15px; backdrop-filter: blur(10px);">
+            <h3 class="text-warning" style="text-shadow: 0 0 10px rgba(255, 193, 7, 0.5);">
+                <i class="bi bi-exclamation-triangle"></i> لا توجد دروس مشفرة لهذا المسار بعد.
+            </h3>
+            <p class="opacity-50">سيتم رفع البيانات قريباً إلى النظام.</p>
         </div>
     {% endif %}
 </div>
