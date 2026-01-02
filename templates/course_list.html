@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>أكاديمية محمد التقنية | CORE SYSTEM</title>
+    <title>الجيريان دمي حار ومنوليش اللور | CORE SYSTEM</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         :root {
@@ -26,7 +26,7 @@
             width: 100%;
             height: 100%;
             z-index: -2;
-            opacity: 0.6;
+            opacity: 0.8; /* زدت الشفافية قليلاً لتظهر الأرقام بوضوح */
         }
 
         .overlay {
@@ -65,7 +65,7 @@
             color: var(--neon);
             text-shadow: 0 0 15px var(--neon);
             font-weight: 900;
-            font-size: clamp(2rem, 5vw, 3rem);
+            font-size: clamp(1.5rem, 5vw, 2.5rem); /* تصغير الحجم قليلاً ليتناسب مع الجملة الطويلة */
         }
 
         .cyber-card {
@@ -131,8 +131,8 @@
 
 <div class="container">
     <div class="header-panel">
-        <h1 class="neon-title">أكاديمية محمد للبرمجة المتقدمة</h1>
-        <p class="fs-5 opacity-75">نظام إدارة المحتوى التعليمي المشفر</p>
+        <h1 class="neon-title">الجيريان دمي حار ومنوليش اللور</h1>
+        <p class="fs-5 opacity-75">موقع مشفر</p>
     </div>
 
     <div class="row g-4 justify-content-center">
@@ -143,7 +143,6 @@
                 <div class="p-4 text-center">
                     <p class="small text-info mb-2">STATUS: ACTIVE | ENCRYPTION: ON</p>
                     <p class="text-light opacity-75 small" style="height: 50px; overflow: hidden;">{{ course.description|truncatechars:80 }}</p>
-                    
                     <a href="{% url 'video_detail' course.id %}" class="btn-action">فتح البيانات</a>
                 </div>
             </div>
@@ -157,4 +156,42 @@
 </div>
 
 <script>
-    const canvas = document.
+    const canvas = document.getElementById('matrix-canvas');
+    const ctx = canvas.getContext('2d');
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    // تم تعديل الأحرف لتكون 0 و 1 فقط
+    const characters = "01";
+    const fontSize = 16;
+    const columns = canvas.width / fontSize;
+    const drops = [];
+
+    // تهيئة مصفوفة السقوط
+    for (let i = 0; i < columns; i++) {
+        drops[i] = Math.random() * -100; // جعل البداية عشوائية لجمالية أكبر
+    }
+
+    function draw() {
+        // خلفية شبه شفافة لخلق تأثير التلاشي (Tail)
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.fillStyle = '#00f2ff'; // لون النيون
+        ctx.font = fontSize + 'px monospace';
+
+        for (let i = 0; i < drops.length; i++) {
+            // اختيار عشوائي بين 0 و 1
+            const text = characters.charAt(Math.floor(Math.random() * characters.length));
+            ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+            // إعادة السطر للأعلى بعد وصوله للقاع بشكل عشوائي
+            if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                drops[i] = 0;
+            }
+            drops[i]++;
+        }
+    }
+
+    window.addEventListener('resize',
