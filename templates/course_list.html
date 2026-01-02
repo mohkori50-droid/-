@@ -12,42 +12,43 @@
         }
 
         body {
-            background-color: #000;
+            background-color: #000; /* الأساس أسود */
             color: white;
             font-family: 'Segoe UI', sans-serif;
             margin: 0;
             overflow-x: hidden;
         }
 
+        /* حاوية الماتريكس - تأكدنا أنها في الخلفية تماماً */
         #matrix-canvas {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -2;
-            opacity: 0.8; /* زدت الشفافية قليلاً لتظهر الأرقام بوضوح */
+            z-index: -1; /* خلف المحتوى */
         }
 
+        /* طبقة تظليل خفيفة لضمان قراءة النصوص */
         .overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle, transparent 20%, black 120%);
-            z-index: -1;
+            background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.7) 100%);
+            z-index: 0;
+            pointer-events: none; /* لا تعيق الضغط على الأزرار */
         }
 
         .navbar {
-            background: rgba(0, 0, 0, 0.8) !important;
+            background: rgba(0, 0, 0, 0.9) !important;
             border-bottom: 1px solid var(--neon);
             backdrop-filter: blur(10px);
-            position: sticky;
-            top: 0;
             z-index: 1000;
         }
 
         .container {
+            position: relative;
+            z-index: 10; /* فوق الماتريكس */
             padding-top: 40px;
-            perspective: 1200px;
         }
 
         .header-panel {
@@ -56,8 +57,8 @@
             border-radius: 20px;
             padding: 40px;
             text-align: center;
-            box-shadow: 0 0 30px var(--neon), inset 0 0 20px rgba(0, 242, 255, 0.2);
-            backdrop-filter: blur(15px);
+            box-shadow: 0 0 20px var(--neon);
+            backdrop-filter: blur(10px);
             margin-bottom: 50px;
         }
 
@@ -65,23 +66,20 @@
             color: var(--neon);
             text-shadow: 0 0 15px var(--neon);
             font-weight: 900;
-            font-size: clamp(1.5rem, 5vw, 2.5rem); /* تصغير الحجم قليلاً ليتناسب مع الجملة الطويلة */
+            font-size: clamp(1.5rem, 5vw, 2.5rem);
         }
 
         .cyber-card {
-            background: rgba(0, 0, 0, 0.9);
+            background: rgba(0, 5, 10, 0.9);
             border: 1px solid var(--neon);
             border-radius: 12px;
-            padding: 0;
-            transition: 0.5s;
-            overflow: hidden;
+            transition: 0.4s;
             height: 100%;
-            box-shadow: 0 0 15px rgba(0, 242, 255, 0.1);
         }
 
         .cyber-card:hover {
-            transform: translateY(-15px) scale(1.02);
-            box-shadow: 0 0 40px var(--neon);
+            transform: translateY(-10px);
+            box-shadow: 0 0 30px var(--neon);
         }
 
         .card-header-cyan {
@@ -90,66 +88,56 @@
             padding: 10px;
             font-weight: bold;
             text-align: center;
-            font-size: 0.9rem;
         }
 
         .btn-action {
             background: transparent;
             color: var(--neon);
             border: 1px solid var(--neon);
-            padding: 10px;
-            width: 85%;
-            margin: 20px auto;
-            display: block;
+            padding: 10px 20px;
             text-decoration: none;
-            transition: 0.3s;
-            box-shadow: 0 0 10px var(--neon);
-            text-align: center;
+            display: inline-block;
+            margin: 20px 0;
             font-weight: bold;
+            transition: 0.3s;
         }
 
         .btn-action:hover {
             background: var(--neon);
-            color: black;
-            box-shadow: 0 0 25px var(--neon);
+            color: #000;
         }
     </style>
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg">
+<canvas id="matrix-canvas"></canvas>
+<div class="overlay"></div>
+
+<nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container-fluid">
-        <a class="navbar-brand text-info fw-bold" href="/" style="letter-spacing: 2px;">CORE-SYSTEM</a>
-        <div class="ms-auto d-flex align-items-center">
-             <a href="/admin/" class="btn btn-outline-info btn-sm fw-bold">لوحة التحكم</a>
+        <a class="navbar-brand text-info fw-bold" href="#">CORE-SYSTEM</a>
+        <div class="ms-auto">
+            <a href="/admin/" class="btn btn-outline-info btn-sm">لوحة التحكم</a>
         </div>
     </div>
 </nav>
 
-<canvas id="matrix-canvas"></canvas>
-<div class="overlay"></div>
-
 <div class="container">
     <div class="header-panel">
         <h1 class="neon-title">الجيريان دمي حار ومنوليش اللور</h1>
-        <p class="fs-5 opacity-75">موقع مشفر</p>
+        <p class="fs-5 opacity-75 text-info">موقع مشفر</p>
     </div>
 
     <div class="row g-4 justify-content-center">
         {% for course in courses %}
         <div class="col-md-6 col-lg-4">
             <div class="cyber-card">
-                <div class="card-header-cyan">SYSTEM NODE: {{ course.title }}</div>
+                <div class="card-header-cyan">NODE: {{ course.title }}</div>
                 <div class="p-4 text-center">
-                    <p class="small text-info mb-2">STATUS: ACTIVE | ENCRYPTION: ON</p>
-                    <p class="text-light opacity-75 small" style="height: 50px; overflow: hidden;">{{ course.description|truncatechars:80 }}</p>
+                    <p class="text-light opacity-75 small">{{ course.description|truncatechars:100 }}</p>
                     <a href="{% url 'video_detail' course.id %}" class="btn-action">فتح البيانات</a>
                 </div>
             </div>
-        </div>
-        {% empty %}
-        <div class="text-center mt-5">
-            <h3 class="text-warning">لا توجد بيانات متاحة حالياً. أضف دورة من لوحة التحكم.</h3>
         </div>
         {% endfor %}
     </div>
@@ -159,39 +147,53 @@
     const canvas = document.getElementById('matrix-canvas');
     const ctx = canvas.getContext('2d');
 
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    // تحديد أبعاد الكانفاس بملء الشاشة
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
 
-    // تم تعديل الأحرف لتكون 0 و 1 فقط
-    const characters = "01";
-    const fontSize = 16;
-    const columns = canvas.width / fontSize;
+    // الأرقام التي ستسقط
+    const binary = "01";
+    const fontSize = 18;
+    const columns = Math.floor(canvas.width / fontSize);
     const drops = [];
 
-    // تهيئة مصفوفة السقوط
+    // إعطاء كل عمود نقطة بداية عشوائية خارج الشاشة
     for (let i = 0; i < columns; i++) {
-        drops[i] = Math.random() * -100; // جعل البداية عشوائية لجمالية أكبر
+        drops[i] = Math.random() * -100;
     }
 
     function draw() {
-        // خلفية شبه شفافة لخلق تأثير التلاشي (Tail)
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+        // طبقة شفافة جداً لخلق تأثير "ذيل" للأرقام
+        ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        ctx.fillStyle = '#00f2ff'; // لون النيون
-        ctx.font = fontSize + 'px monospace';
+        // لون الأرقام (النيون الأزرق)
+        ctx.fillStyle = "#00f2ff"; 
+        ctx.font = fontSize + "px monospace";
 
         for (let i = 0; i < drops.length; i++) {
             // اختيار عشوائي بين 0 و 1
-            const text = characters.charAt(Math.floor(Math.random() * characters.length));
+            const text = binary.charAt(Math.floor(Math.random() * binary.length));
+            
+            // رسم الرقم
             ctx.fillText(text, i * fontSize, drops[i] * fontSize);
 
-            // إعادة السطر للأعلى بعد وصوله للقاع بشكل عشوائي
+            // إذا وصل الرقم للقاع، يعود للأعلى باحتمالية معينة
             if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
                 drops[i] = 0;
             }
+
             drops[i]++;
         }
     }
 
-    window.addEventListener('resize',
+    // تشغيل الأنيميشن بسرعة 30 إطار في الثانية
+    setInterval(draw, 33);
+</script>
+
+</body>
+</html>
